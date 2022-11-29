@@ -11,7 +11,7 @@ const (
 	SaveUserQuery       = "INSERT INTO users (first_name, second_name, email, password) VALUES ($1, $2, $3, $4)"
 	GetUserDetailsQuery = "SELECT * FROM users WHERE id = $1 LIMIT 1"
 	GetUsersListQuery   = "SELECT * FROM users"
-	UpdateUserQuery     = "UPDATE users SET (first_name, second_name, email, password) = ($2, $3, $4, $5) WHERE id = $1"
+	UpdateUserQuery     = "UPDATE users SET first_name = $2, second_name = $3, email = $4, password = $5 WHERE id = $1"
 	DeleteUserQuery     = "DELETE FROM users WHERE id = $1"
 	GetUserByEmailQuery = "SELECT * FROM users WHERE email = $1 LIMIT 1"
 )
