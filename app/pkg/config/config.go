@@ -6,7 +6,7 @@ import (
 )
 
 func InitConfig() {
-	viper.SetConfigName("App")
+	viper.SetConfigName("app")
 	viper.SetConfigType("yml")
 	viper.AddConfigPath("./configs")
 
