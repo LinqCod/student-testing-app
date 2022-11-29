@@ -122,7 +122,7 @@ func (r *UserRepositoryImpl) GetUserFullName(userId int64) (string, error) {
 	return fmt.Sprintf("%s %s", userDetails.FirstName, userDetails.SecondName), nil
 }
 
-func (r *UserRepositoryImpl) GetUserByEmail(login entity.User) (*entity.User, error) {
+func (r *UserRepositoryImpl) GetUserByEmail(login entity.UserLoginDTO) (*entity.User, error) {
 	var user entity.User
 	if err := r.db.QueryRowContext(r.ctx, GetUserByEmailQuery, login.Email).Scan(
 		&user.Id,
