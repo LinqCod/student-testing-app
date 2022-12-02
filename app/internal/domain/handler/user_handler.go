@@ -64,10 +64,6 @@ func (h *UserHandler) GetUserDetails(c *gin.Context) {
 		return
 	}
 
-	if result == nil {
-		result = &entity.UserDTO{}
-	}
-
 	response.ResponseOKWithData(c, result)
 }
 
@@ -91,10 +87,6 @@ func (h *UserHandler) UpdateUser(c *gin.Context) {
 	if err != nil {
 		response.ResponseError(c, err.Error(), http.StatusInternalServerError)
 		return
-	}
-
-	if result == nil {
-		result = &entity.UserDTO{}
 	}
 
 	response.ResponseOKWithData(c, result)
@@ -129,10 +121,6 @@ func (h *UserHandler) Login(c *gin.Context) {
 	if err != nil {
 		response.ResponseError(c, err.Error(), http.StatusInternalServerError)
 		return
-	}
-
-	if validateUser == nil {
-		validateUser = &entity.User{}
 	}
 
 	token, err := jwttoken.CreateToken(validateUser.Id)

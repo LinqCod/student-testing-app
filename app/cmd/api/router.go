@@ -20,11 +20,11 @@ func InitRouter(ctx context.Context, db *sql.DB) *gin.Engine {
 	user := router.Group("v1/user")
 	{
 		user.GET("/", userHandler.GetUsersList)
-		user.GET("/:user_id", middleware.AuthMiddleware(), userHandler.GetUserDetails)
 		user.POST("/", userHandler.RegisterUser)
-		user.PUT("/:user_id", userHandler.UpdateUser)
-		user.DELETE("/:user_id", userHandler.DeleteUser)
 		user.POST("/login", userHandler.Login)
+		user.GET("/:user_id", middleware.AuthMiddleware(), userHandler.GetUserDetails)
+		user.PUT("/:user_id", middleware.AuthMiddleware(), userHandler.UpdateUser)
+		user.DELETE("/:user_id", middleware.AuthMiddleware(), userHandler.DeleteUser)
 	}
 
 	return router

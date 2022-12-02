@@ -50,16 +50,11 @@ func (s *UserServiceImpl) SaveUser(registration *entity.UserRegistrationDTO) (*e
 		return nil, err
 	}
 
-	var userDTO entity.UserDTO
-	if result != nil {
-		userDTO = entity.UserDTO{
-			Id:       result.Id,
-			FullName: s.getUserFullName(*result),
-			Email:    result.Email,
-		}
-	}
-
-	return &userDTO, nil
+	return &entity.UserDTO{
+		Id:       result.Id,
+		FullName: s.getUserFullName(*result),
+		Email:    result.Email,
+	}, nil
 }
 
 func (s *UserServiceImpl) GetUserDetails(userId int64) (*entity.UserDTO, error) {
@@ -68,16 +63,11 @@ func (s *UserServiceImpl) GetUserDetails(userId int64) (*entity.UserDTO, error) 
 		return nil, err
 	}
 
-	var userDTO entity.UserDTO
-	if result != nil {
-		userDTO = entity.UserDTO{
-			Id:       result.Id,
-			FullName: s.getUserFullName(*result),
-			Email:    result.Email,
-		}
-	}
-
-	return &userDTO, nil
+	return &entity.UserDTO{
+		Id:       result.Id,
+		FullName: s.getUserFullName(*result),
+		Email:    result.Email,
+	}, nil
 }
 
 func (s *UserServiceImpl) GetUsersList() ([]entity.UserDTO, error) {
@@ -111,16 +101,11 @@ func (s *UserServiceImpl) UpdateUser(user *entity.User) (*entity.UserDTO, error)
 		return nil, err
 	}
 
-	var userDTO entity.UserDTO
-	if result != nil {
-		userDTO = entity.UserDTO{
-			Id:       result.Id,
-			FullName: s.getUserFullName(*result),
-			Email:    result.Email,
-		}
-	}
-
-	return &userDTO, nil
+	return &entity.UserDTO{
+		Id:       result.Id,
+		FullName: s.getUserFullName(*result),
+		Email:    result.Email,
+	}, nil
 }
 
 func (s *UserServiceImpl) DeleteUser(userId int64) error {
