@@ -11,7 +11,7 @@ import (
 type UserService interface {
 	SaveUser(registration *entity.UserRegistrationDTO) (*entity.UserDTO, error)
 	GetUserDetails(userId int64) (*entity.UserDTO, error)
-	GetUsersList() ([]entity.UserDTO, error)
+	GetAllUsers() ([]entity.UserDTO, error)
 	UpdateUser(user *entity.User) (*entity.UserDTO, error)
 	DeleteUser(userId int64) error
 	GetUserByEmail(login entity.UserLoginDTO) (*entity.User, error)
@@ -70,8 +70,8 @@ func (s *UserServiceImpl) GetUserDetails(userId int64) (*entity.UserDTO, error) 
 	}, nil
 }
 
-func (s *UserServiceImpl) GetUsersList() ([]entity.UserDTO, error) {
-	result, err := s.userRepo.GetUsersList()
+func (s *UserServiceImpl) GetAllUsers() ([]entity.UserDTO, error) {
+	result, err := s.userRepo.GetAllUsers()
 	if err != nil {
 		return nil, err
 	}

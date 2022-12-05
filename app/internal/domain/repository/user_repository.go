@@ -19,7 +19,7 @@ const (
 type UserRepository interface {
 	SaveUser(user *entity.User) (*entity.User, error)
 	GetUserDetails(userId int64) (*entity.User, error)
-	GetUsersList() ([]entity.User, error)
+	GetAllUsers() ([]entity.User, error)
 	UpdateUser(user *entity.User) (*entity.User, error)
 	DeleteUser(userId int64) error
 	GetUserFullName(userId int64) (string, error)
@@ -31,7 +31,7 @@ type UserRepositoryImpl struct {
 	db  *sql.DB
 }
 
-func NewUserRepository(ctx context.Context, db *sql.DB) *UserRepositoryImpl {
+func NewUserRepository(ctx context.Context, db *sql.DB) UserRepository {
 	return &UserRepositoryImpl{
 		ctx: ctx,
 		db:  db,
@@ -62,7 +62,7 @@ func (r *UserRepositoryImpl) GetUserDetails(userId int64) (*entity.User, error) 
 	return &user, nil
 }
 
-func (r *UserRepositoryImpl) GetUsersList() ([]entity.User, error) {
+func (r *UserRepositoryImpl) GetAllUsers() ([]entity.User, error) {
 	var users []entity.User
 	rows, err := r.db.QueryContext(r.ctx, GetUsersListQuery)
 	defer rows.Close()
