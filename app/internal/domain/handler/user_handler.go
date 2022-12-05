@@ -37,8 +37,8 @@ func (h *UserHandler) RegisterUser(c *gin.Context) {
 	response.ResponseCreated(c, result)
 }
 
-func (h *UserHandler) GetUsersList(c *gin.Context) {
-	result, err := h.userService.GetUsersList()
+func (h *UserHandler) GetAllUsers(c *gin.Context) {
+	result, err := h.userService.GetAllUsers()
 	if err != nil {
 		response.ResponseError(c, err.Error(), http.StatusInternalServerError)
 		return
