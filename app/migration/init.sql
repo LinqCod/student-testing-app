@@ -30,17 +30,20 @@ CREATE TABLE "subjects" (
 
 CREATE TABLE "groups_subjects" (
                                    "group_id" bigint NOT NULL REFERENCES groups(id),
-                                   "subject_id" bigint NOT NULL REFERENCES subjects(id)
+                                   "subject_id" bigint NOT NULL REFERENCES subjects(id),
+                                   CONSTRAINT groups_subjects_pkey PRIMARY KEY (group_id, subject_id)
 );
 
 CREATE TABLE "teachers_groups" (
                                    "teacher_id" bigint NOT NULL REFERENCES teachers(id),
-                                   "group_id" bigint NOT NULL REFERENCES groups(id)
+                                   "group_id" bigint NOT NULL REFERENCES groups(id),
+                                   CONSTRAINT teachers_groups_pkey PRIMARY KEY (teacher_id, group_id)
 );
 
 CREATE TABLE "teachers_subjects" (
                                      "teacher_id" bigint NOT NULL REFERENCES teachers(id),
-                                     "subject_id" bigint NOT NULL REFERENCES subjects(id)
+                                     "subject_id" bigint NOT NULL REFERENCES subjects(id),
+                                     CONSTRAINT teachers_subjects_pkey PRIMARY KEY (teacher_id, subject_id)
 );
 
 CREATE TABLE "task_categories" (
