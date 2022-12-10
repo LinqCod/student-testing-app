@@ -18,7 +18,7 @@ func InitRouter(ctx context.Context, db *sql.DB) *gin.Engine {
 	studentHandler := handler.NewStudentHandler(studentService)
 
 	subjectRepository := repository.NewSubjectRepository(ctx, db)
-	subjectService := service.SubjectService(subjectRepository)
+	subjectService := service.NewSubjectService(subjectRepository)
 	subjectHandler := handler.NewSubjectHandler(subjectService)
 
 	api := router.Group("/api/v1")
