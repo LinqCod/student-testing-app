@@ -13,18 +13,16 @@ import (
 func InitRouter(ctx context.Context, db *sql.DB) *gin.Engine {
 	router := gin.Default()
 
-	userRepository := repository.NewUserRepository(ctx, db)
-	userService := service.NewUserService(userRepository)
-	userHandler := handler.NewUserHandler(userService)
+	studentRepository := repository.NewStudentRepository(ctx, db)
+	studentService := service.NewStudentService(studentRepository)
+	studentHandler := handler.NewStudentHandler(studentService)
 
-	user := router.Group("v1/user")
+	students := router.Group("/api/v1/students")
 	{
-		user.GET("/", userHandler.GetUsersList)
-		user.POST("/", userHandler.RegisterUser)
-		user.POST("/login", userHandler.Login)
-		user.GET("/:user_id", middleware.AuthMiddleware(), userHandler.GetUserDetails)
-		user.PUT("/:user_id", middleware.AuthMiddleware(), userHandler.UpdateUser)
-		user.DELETE("/:user_id", middleware.AuthMiddleware(), userHandler.DeleteUser)
+		students.POST("/", studentHandler.RegisterStudent)
+		students.POST("/login", studentHandler.Login)
+		students.GET("/:student_id", middleware.AuthMiddleware(), studentHandler.GetStudentDetails)
+		students.PUT("/:student_id", middleware.AuthMiddleware(), studentHandler.UpdateStudent)
 	}
 
 	return router
