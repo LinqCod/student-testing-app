@@ -43,7 +43,7 @@
 #### Tasks:
 ```
  #Students
- - /api/v1/tasks/:subject_id | GET | получение списка разделов задач по предмету
- - /api/v1/tasks/categories/:category_id | GET | получение списка задач по id раздела
+ - /api/v1/tasks/:category_id | GET | получение списка задач по id раздела
+ - /api/v1/tasks/categories/:subject_id | GET | получение списка разделов задач по предмету
  - /api/v1/tasks/answers/:task_id | GET | получение списка ответов для задачи
 ```
