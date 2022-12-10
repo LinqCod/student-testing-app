@@ -25,7 +25,7 @@ func NewStudentService(studentRepo repository.StudentRepository) *StudentService
 	}
 }
 
-func (s *StudentServiceImpl) SaveStudent(registration *entity.StudentRegistrationDTO) (*entity.StudentDTO, error) {
+func (s StudentServiceImpl) SaveStudent(registration *entity.StudentRegistrationDTO) (*entity.StudentDTO, error) {
 	var student = entity.Student{
 		User: entity.User{
 			FullName: fmt.Sprintf("%s %s %s", registration.FirstName, registration.SecondName, registration.Patronymic),
@@ -57,7 +57,7 @@ func (s *StudentServiceImpl) SaveStudent(registration *entity.StudentRegistratio
 	}, nil
 }
 
-func (s *StudentServiceImpl) GetStudentDetails(studentId int64) (*entity.StudentDTO, error) {
+func (s StudentServiceImpl) GetStudentDetails(studentId int64) (*entity.StudentDTO, error) {
 	result, err := s.studentRepo.GetStudentDetails(studentId)
 	if err != nil {
 		return nil, err
@@ -72,7 +72,7 @@ func (s *StudentServiceImpl) GetStudentDetails(studentId int64) (*entity.Student
 	}, nil
 }
 
-func (s *StudentServiceImpl) UpdateStudent(student *entity.Student) (*entity.StudentDTO, error) {
+func (s StudentServiceImpl) UpdateStudent(student *entity.Student) (*entity.StudentDTO, error) {
 	password, err := security.Hash(student.Password)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (s *StudentServiceImpl) UpdateStudent(student *entity.Student) (*entity.Stu
 	}, nil
 }
 
-func (s *StudentServiceImpl) GetStudentByEmail(login entity.StudentLoginDTO) (*entity.Student, error) {
+func (s StudentServiceImpl) GetStudentByEmail(login entity.StudentLoginDTO) (*entity.Student, error) {
 	result, err := s.studentRepo.GetStudentByEmail(login)
 	if err != nil {
 		return nil, err

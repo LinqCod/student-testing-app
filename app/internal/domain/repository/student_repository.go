@@ -47,7 +47,7 @@ func NewStudentRepository(ctx context.Context, db *sql.DB) StudentRepository {
 	}
 }
 
-func (r *StudentRepositoryImpl) SaveStudent(student *entity.Student) (*entity.Student, error) {
+func (r StudentRepositoryImpl) SaveStudent(student *entity.Student) (*entity.Student, error) {
 	err := r.db.QueryRowContext(
 		r.ctx,
 		SaveStudentQuery,
@@ -65,7 +65,7 @@ func (r *StudentRepositoryImpl) SaveStudent(student *entity.Student) (*entity.St
 	return student, nil
 }
 
-func (r *StudentRepositoryImpl) GetStudentDetails(studentId int64) (*entity.Student, error) {
+func (r StudentRepositoryImpl) GetStudentDetails(studentId int64) (*entity.Student, error) {
 	var student entity.Student
 	if err := r.db.QueryRowContext(r.ctx, GetStudentDetailsQuery, studentId).Scan(
 		&student.Group.Id,
@@ -83,7 +83,7 @@ func (r *StudentRepositoryImpl) GetStudentDetails(studentId int64) (*entity.Stud
 	return &student, nil
 }
 
-func (r *StudentRepositoryImpl) UpdateStudent(student *entity.Student) (*entity.Student, error) {
+func (r StudentRepositoryImpl) UpdateStudent(student *entity.Student) (*entity.Student, error) {
 	err := r.db.QueryRowContext(
 		r.ctx,
 		UpdateStudentQuery,
@@ -106,7 +106,7 @@ func (r *StudentRepositoryImpl) UpdateStudent(student *entity.Student) (*entity.
 	return student, nil
 }
 
-func (r *StudentRepositoryImpl) GetStudentByEmail(login entity.StudentLoginDTO) (*entity.Student, error) {
+func (r StudentRepositoryImpl) GetStudentByEmail(login entity.StudentLoginDTO) (*entity.Student, error) {
 	var student entity.Student
 	if err := r.db.QueryRowContext(r.ctx, GetStudentByEmailQuery, login.Email).Scan(
 		&student.Group.Id,

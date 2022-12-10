@@ -7,20 +7,15 @@ import (
 )
 
 const (
-	InsertTaskQuery   = "INSERT INTO tasks (category_id, description) VALUES ($1, $2)"
-	InsertAnswerQuery = "INSERT INTO task_answers (task_id, text, is_right) VALUES ($1, $2, $3)"
-	// GetTasksByCategoryQuery DeleteTaskQuery         = "DELETE task_answers, tasks FROM task_answers LEFT JOIN tasks ON task_answers.task_id = tasks.id WHERE task.id = $1"
-	GetTasksByCategoryQuery = ""
-	UpdateTaskQuery         = ""
-	GetAllTasksQuery        = ""
+	GetTaskCategoriesBySubjectIdQuery = "SELECT id, title FROM task_categories WHERE subject_id=$1"
+	GetTasksByCategoryIdQuery         = "SELECT id, text FROM tasks WHERE category_id=$1"
+	GetTaskAnswersByTaskId            = "SELECT id, text, is_right FROM task_answers WHERE task_id=$1"
 )
 
 type TaskRepository interface {
-	CreateTask(task *entity.Task) (*entity.Task, error)
-	DeleteTask(taskId int64) error
-	GetTasksByCategoryQuery(category string) ([]entity.Task, error)
-	UpdateTask(task *entity.Task) (*entity.Task, error)
-	GetAllTasks() ([]entity.Task, error)
+	GetTaskCategoriesBySubjectId(subjectId int64) ([]entity.TaskCategory, error)
+	GetTasksByCategoryId(categoryId int64) ([]entity.Task, error)
+	GetTaskAnswersByTaskId(taskId int64) ([]entity.TaskAnswer, error)
 }
 
 type TaskRepositoryImpl struct {
@@ -35,38 +30,59 @@ func NewTaskRepository(ctx context.Context, db *sql.DB) TaskRepository {
 	}
 }
 
-func (t TaskRepositoryImpl) CreateTask(task *entity.Task) (*entity.Task, error) {
-	err := t.db.QueryRowContext(t.ctx, InsertTaskQuery, task.CategoryId, task.Description).Err()
+func (t TaskRepositoryImpl) GetTaskCategoriesBySubjectId(subjectId int64) ([]entity.TaskCategory, error) {
+	rows, err := t.db.QueryContext(t.ctx, GetTaskCategoriesBySubjectIdQuery, subjectId)
 	if err != nil {
 		return nil, err
 	}
 
-	for i := range task.Answers {
-		err = t.db.QueryRowContext(t.ctx, InsertAnswerQuery, task.Answers[i].TaskId, task.Answers[i].Text, task.Answers[i].IsRight).Err()
-		if err != nil {
+	var categories []entity.TaskCategory
+	for rows.Next() {
+		var category entity.TaskCategory
+		if err = rows.Scan(&category.Id, &category.Title); err != nil {
 			return nil, err
 		}
+
+		categories = append(categories, category)
 	}
 
-	return task, nil
+	return categories, nil
 }
 
-func (t TaskRepositoryImpl) DeleteTask(taskId int64) error {
-	//TODO: implement deletion of task with answers
-	return nil
+func (t TaskRepositoryImpl) GetTasksByCategoryId(categoryId int64) ([]entity.Task, error) {
+	rows, err := t.db.QueryContext(t.ctx, GetTasksByCategoryIdQuery, categoryId)
+	if err != nil {
+		return nil, err
+	}
+
+	var tasks []entity.Task
+	for rows.Next() {
+		var task entity.Task
+		if err = rows.Scan(&task.Id, &task.Text); err != nil {
+			return nil, err
+		}
+
+		tasks = append(tasks, task)
+	}
+
+	return tasks, nil
 }
 
-func (t TaskRepositoryImpl) GetTasksByCategoryQuery(category string) ([]entity.Task, error) {
-	//TODO implement me
-	panic("implement me")
-}
+func (t TaskRepositoryImpl) GetTaskAnswersByTaskId(taskId int64) ([]entity.TaskAnswer, error) {
+	rows, err := t.db.QueryContext(t.ctx, GetTaskAnswersByTaskId, taskId)
+	if err != nil {
+		return nil, err
+	}
 
-func (t TaskRepositoryImpl) UpdateTask(task *entity.Task) (*entity.Task, error) {
-	//TODO implement me
-	panic("implement me")
-}
+	var taskAnswers []entity.TaskAnswer
+	for rows.Next() {
+		var taskAnswer entity.TaskAnswer
+		if err = rows.Scan(&taskAnswer.Id, &taskAnswer.Text, &taskAnswer.IsRight); err != nil {
+			return nil, err
+		}
 
-func (t TaskRepositoryImpl) GetAllTasks() ([]entity.Task, error) {
-	//TODO implement me
-	panic("implement me")
+		taskAnswers = append(taskAnswers, taskAnswer)
+	}
+
+	return taskAnswers, nil
 }
