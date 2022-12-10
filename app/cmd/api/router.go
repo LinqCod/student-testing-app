@@ -21,6 +21,10 @@ func InitRouter(ctx context.Context, db *sql.DB) *gin.Engine {
 	subjectService := service.NewSubjectService(subjectRepository)
 	subjectHandler := handler.NewSubjectHandler(subjectService)
 
+	taskRepository := repository.NewTaskRepository(ctx, db)
+	taskService := service.NewTaskService(taskRepository)
+	taskHandler := handler.NewTaskHandler(taskService)
+
 	api := router.Group("/api/v1")
 	{
 		students := api.Group("/students")
@@ -34,6 +38,13 @@ func InitRouter(ctx context.Context, db *sql.DB) *gin.Engine {
 		subjects := api.Group("/subjects")
 		{
 			subjects.GET("/:group_id", middleware.AuthMiddleware(), subjectHandler.GetSubjectsByGroupId)
+		}
+		// FOR STUDENTS
+		tasks := api.Group("/tasks")
+		{
+			tasks.GET("/:category_id", middleware.AuthMiddleware(), taskHandler.GetTasksByCategoryId)
+			tasks.GET("/categories/:subject_id", middleware.AuthMiddleware(), taskHandler.GetTaskCategoriesBySubjectId)
+			tasks.GET("/answers/:task_id", middleware.AuthMiddleware(), taskHandler.GetTaskAnswersByTaskId)
 		}
 	}
 
