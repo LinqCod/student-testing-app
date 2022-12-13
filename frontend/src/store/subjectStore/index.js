@@ -13,19 +13,27 @@ export default {
         ]
     },
     mutations: {
-        ADD_SUBJECT(state, subject) {
-            state.subjects.push(subject);
-        },
-        DELETE_SUBJECT(state, id) {
-            state.subjects = state.subjects.filter(subject => subject.id !== id);
+        SET_ALL_SUBJECTS(state, subjects) {
+            state.subjects = subjects;
         }
     },
     actions: {
-        async addSubject(context, subject) {
-            context.commit("ADD_SUBJECT", subject);
-        },
-        async deleteSubject(context, id) {
-            context.commit("DELETE_SUBJECT", id);
+        async getAllSubjects(context, { group_id }) {
+            fetch("http://localhost:4000/api/v1/subjects/" + group_id)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw Error(response.body);
+                    }
+                })
+                .then(data => {
+                    console.log(data);
+                    context.commit("SET_ALL_SUBJECTS", data.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     },
     getters: {

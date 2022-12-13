@@ -11,7 +11,7 @@ export default {
     ...mapActions({ login: "auth/login" }),
     loginButtonClicked() {
       this.login().then(() => {
-        this.routes.push({ name: "StudentSubjects" });
+        this.$router.push({ name: "StudentSubjects" });
       });
     }
   }

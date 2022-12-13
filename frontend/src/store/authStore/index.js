@@ -6,7 +6,10 @@ export default {
             full_name: "Балин Максим Максимович",
             email: "danny12123@yandex.ru",
             personal_number: "23ИЕ23",
-            group_title: "ИКБО-24-20",
+            group: {
+                id: 1,
+                title: "ИКБО-24-20"
+            },
             loggedIn: false
         }
     },
