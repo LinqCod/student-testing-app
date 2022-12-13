@@ -17,7 +17,7 @@ export default {
             state.subjects.push(subject);
         },
         DELETE_SUBJECT(state, id) {
-            state.subjects = state.subjects.filter(subject => subject.id != id);
+            state.subjects = state.subjects.filter(subject => subject.id !== id);
         }
     },
     actions: {
