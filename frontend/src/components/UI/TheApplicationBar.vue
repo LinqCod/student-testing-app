@@ -8,11 +8,15 @@
           :to="link.to">{{ link.name }}</router-link>
     </div>
     <div class="right-links ">
-      <a class="app-bar-item" href="#">LOGIN</a>
+      <a class="app-bar-item" href="#" v-if="!loggedIn" @click.prevent="login">LOGIN</a>
+      <a class="app-bar-item" href="#" v-if="loggedIn" @click.prevent="logout">LOGOUT</a>
     </div>
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
+
 export default
 {
   data() {
@@ -21,10 +25,20 @@ export default
         {
           name: "Предметы",
           to: { name: "MySubjects" }
-        }
+        },
       ]
     };
-  }};
+  },
+  methods: {
+    ...mapActions({
+      login: "auth/login",
+      logout: "auth/logout"
+    })
+  },
+  computed: {
+    ...mapGetters({ loggedIn: "auth/isLoggedIn" })
+  }
+};
 </script>
 <style scoped>
 .app-bar {
@@ -34,7 +48,8 @@ export default
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #02060e;
+  background-color: #ffffff;
+  box-shadow: 0 5px 0 rgba(210, 210, 210, 1);
   overflow: hidden;
   display: block;
   justify-content: space-between;
@@ -44,7 +59,7 @@ export default
 }
 .left-links a {
   float: left;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(5, 5, 5, 0.65);
 }
 
 a:hover {
@@ -54,14 +69,15 @@ a:hover {
 a {
   float: left;
   display: block;
-  color: #ffffff;
+  color: #000000;
   text-align: center;
-  padding: 14px 48px;
+  padding: 14px 0;
   font-weight: bold;
   text-decoration: none;
   font-size: 17px;
 }
 .right-links {
   float: right;
+  padding-right: 10%;
 }
 </style>

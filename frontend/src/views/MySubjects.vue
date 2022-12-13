@@ -11,16 +11,12 @@ export default
   components: { SubjectList  },
   data: function() {
     return {
-      subjects: [
-        {
-          id: 1,
-          title: "Математика"
-        },
-        {
-          id: 2,
-          title: "Программирование"
-        }
-      ]
     };
-  }};
+  },
+  computed: {
+    subjects() {
+      return this.$store.getters["subjects/allSubjects"];
+    }
+  }
+};
 </script>
