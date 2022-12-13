@@ -29,22 +29,22 @@ func InitRouter(ctx context.Context, db *sql.DB) *gin.Engine {
 	{
 		students := api.Group("/students")
 		{
-			students.POST("/", studentHandler.RegisterStudent)
-			students.POST("/login", studentHandler.Login)
-			students.GET("/:student_id", middleware.AuthMiddleware(), studentHandler.GetStudentDetails)
-			students.PUT("/:student_id", middleware.AuthMiddleware(), studentHandler.UpdateStudent)
+			students.POST("/", middleware.CORSMiddleware(), studentHandler.RegisterStudent)
+			students.POST("/login", middleware.CORSMiddleware(), studentHandler.Login)
+			students.GET("/:student_id", middleware.CORSMiddleware(), middleware.AuthMiddleware(), studentHandler.GetStudentDetails)
+			students.PUT("/:student_id", middleware.CORSMiddleware(), middleware.AuthMiddleware(), studentHandler.UpdateStudent)
 		}
 		// FOR STUDENTS
 		subjects := api.Group("/subjects")
 		{
-			subjects.GET("/:group_id", middleware.AuthMiddleware(), subjectHandler.GetSubjectsByGroupId)
+			subjects.GET("/:group_id", middleware.CORSMiddleware(), middleware.AuthMiddleware(), subjectHandler.GetSubjectsByGroupId)
 		}
 		// FOR STUDENTS
 		tasks := api.Group("/tasks")
 		{
-			tasks.GET("/:category_id", middleware.AuthMiddleware(), taskHandler.GetTasksByCategoryId)
-			tasks.GET("/categories/:subject_id", middleware.AuthMiddleware(), taskHandler.GetTaskCategoriesBySubjectId)
-			tasks.GET("/answers/:task_id", middleware.AuthMiddleware(), taskHandler.GetTaskAnswersByTaskId)
+			tasks.GET("/:category_id", middleware.CORSMiddleware(), middleware.AuthMiddleware(), taskHandler.GetTasksByCategoryId)
+			tasks.GET("/categories/:subject_id", middleware.CORSMiddleware(), middleware.AuthMiddleware(), taskHandler.GetTaskCategoriesBySubjectId)
+			tasks.GET("/answers/:task_id", middleware.CORSMiddleware(), middleware.AuthMiddleware(), taskHandler.GetTaskAnswersByTaskId)
 		}
 	}
 
