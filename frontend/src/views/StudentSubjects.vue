@@ -7,7 +7,7 @@
 <script>
 import SubjectList from "@/components/SubjectList.vue";
 export default
-{  name: "MySubjects",
+{  name: "StudentSubjects",
   components: { SubjectList  },
   data: function() {
     return {
