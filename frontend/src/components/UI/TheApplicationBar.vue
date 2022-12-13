@@ -37,7 +37,7 @@ export default
     }),
     logoutButtonClicked() {
       this.logout().then(() => {
-        this.routes.push({ name: "Login" });
+        this.$router.push({ name: "Login" });
       });
     }
   },
