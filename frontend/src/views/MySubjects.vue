@@ -1,14 +1,14 @@
 <template>
   <div class="subjects">
-    <h1>Subjects</h1>
-    <subjects-list :subjects="subjects"></subjects-list>
+    <h1>Предметы группы</h1>
+    <subject-list :subjects="subjects"></subject-list>
   </div>
 </template>
 <script>
-import SubjectsList from "@/components/SubjectsList.vue";
+import SubjectList from "@/components/SubjectList.vue";
 export default
-{  name: "Subjects",
-  components: { SubjectsList  },
+{  name: "MySubjects",
+  components: { SubjectList  },
   data: function() {
     return {
       subjects: [
