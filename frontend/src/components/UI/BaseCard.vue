@@ -16,10 +16,9 @@ export default {
 div {
   margin: 2rem auto;
   max-width: 50rem;
-  border-radius: 12px;
-  color: white;
-  background-color: #02060e;
-  box-shadow: 0 0 10px rgba(0, 154, 255, 0.75);
+  color: #000000;
+  background-color: #ffffff;
+  box-shadow: -10px 10px 0 rgba(0, 154, 255, 0.75);
   padding: 1rem;
 }
 </style>

@@ -12,13 +12,14 @@ export default {
 <style>
   body {
     margin: 0;
-    color: rgba(255, 255, 255, 0.25);
-    background-color: #0e1728;
+    color: rgba(63, 50, 50, 0.25);
+    background-color: rgb(220, 220, 220);
     font-family: Arial, Helvetica, sans-serif;
   }
   .content {
-    padding-top: 5.5vh;
+    padding-top: 7.5vh;
     padding-left: 10%;
+    padding-right: 10%;
   }
 </style>
 <!--<script setup>-->
