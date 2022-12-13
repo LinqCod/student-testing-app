@@ -19,3 +19,13 @@ func AuthMiddleware() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+func CORSMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if origin := c.Request.Header.Get("Origin"); origin != "" {
+			c.Writer.Header().Add("Access-Control-Allow-Origin", origin)
+		}
+
+		c.Next()
+	}
+}
