@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/linqcod/student-testing-app/app/pkg/jwttoken"
 	"github.com/linqcod/student-testing-app/app/pkg/response"
@@ -21,11 +22,11 @@ func AuthMiddleware() gin.HandlerFunc {
 }
 
 func CORSMiddleware() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		if origin := c.Request.Header.Get("Origin"); origin != "" {
-			c.Writer.Header().Add("Access-Control-Allow-Origin", origin)
-		}
-
-		c.Next()
-	}
+	return cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:8084"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH"},
+		AllowHeaders:     []string{"Origin", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	})
 }
