@@ -103,6 +103,10 @@ func (h *StudentHandler) Login(c *gin.Context) {
 		"access_token":    token.AccessToken,
 		"expiration_time": token.ExpirationTimeInUnix,
 		"student_id":      validateStudent.Id,
+		"full_name":       validateStudent.FullName,
+		"email":           validateStudent.Email,
+		"personal_number": validateStudent.PersonalNumber,
+		"group":           validateStudent.Group,
 	}
 
 	response.ResponseOKWithData(c, studentData)
