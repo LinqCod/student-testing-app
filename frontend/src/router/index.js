@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
-import MySubjects from "@/views/StudentSubjects.vue";
+import StudentSubjects from "@/views/StudentSubjects.vue";
 import StudentLogin from "@/views/StudentLogin.vue";
 import store from "@/store";
 
@@ -7,7 +7,7 @@ const routes = [
     {
         path: "/",
         name: "StudentSubjects",
-        component: MySubjects,
+        component: StudentSubjects,
         beforeEnter: (to, from, next) => {
             if (!store.getters["auth/isLoggedIn"]) {
                 next({ name: "Login" });
