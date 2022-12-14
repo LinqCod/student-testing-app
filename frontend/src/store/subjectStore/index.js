@@ -2,14 +2,6 @@ export default {
     namespaced: true,
     state: {
         subjects: [
-            {
-                id: 1,
-                title: "Математика"
-            },
-            {
-                id: 2,
-                title: "Программирование"
-            }
         ]
     },
     mutations: {
@@ -19,7 +11,11 @@ export default {
     },
     actions: {
         async getAllSubjects(context, { group_id }) {
-            fetch("http://localhost:4000/api/v1/subjects/" + group_id)
+            fetch("http://localhost:4000/api/v1/subjects/" + group_id, {
+                headers: {
+                    Authorization: context.rootGetters["auth/getTokenHeader"]
+                }
+            })
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -28,7 +24,6 @@ export default {
                     }
                 })
                 .then(data => {
-                    console.log(data);
                     context.commit("SET_ALL_SUBJECTS", data.data);
                 })
                 .catch(error => {
