@@ -16,7 +16,7 @@ export default
   computed: {
     subjects() {
       return this.$store.getters["subjects/allSubjects"];
-    }
+    },
   },
   mounted() {
     this.$store.dispatch("subjects/getAllSubjects", { group_id: this.$store.getters["auth/currentStudent"].group.id });
