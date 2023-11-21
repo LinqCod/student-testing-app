@@ -11,7 +11,7 @@ import (
 )
 
 func init() {
-	config.InitConfig()
+	config.MustLoadConfig(".env")
 }
 
 func main() {
@@ -22,7 +22,7 @@ func main() {
 	}
 	defer db.Close()
 
-	port := fmt.Sprintf(":%d", viper.GetInt("app.port"))
+	port := fmt.Sprintf(":%s", viper.GetString("SERVER_PORT"))
 
 	app := api.InitRouter(context.Background(), db)
 	app.Run(port)

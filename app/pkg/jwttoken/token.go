@@ -30,7 +30,7 @@ func CreateToken(userId int64) (*TokenDetail, error) {
 	claims["expiration_time"] = td.ExpirationTimeInUnix
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	td.AccessToken, err = token.SignedString([]byte(viper.GetString("jwt.secret")))
+	td.AccessToken, err = token.SignedString([]byte(viper.GetString("JWT_SECRET")))
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +53,7 @@ func getTokenFromRequest(r *http.Request) (*jwt.Token, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("wrong signature method")
 		}
-		return []byte(viper.GetString("jwt.secret")), nil
+		return []byte(viper.GetString("JWT_SECRET")), nil
 	})
 	if err != nil {
 		return nil, err

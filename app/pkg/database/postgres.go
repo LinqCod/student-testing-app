@@ -9,16 +9,14 @@ import (
 )
 
 func InitDB() (*sql.DB, error) {
-	host := viper.GetString("postgres.host")
-	port := viper.GetString("postgres.port")
-	username := viper.GetString("postgres.username")
-	password := viper.GetString("postgres.password")
-	dbname := viper.GetString("postgres.dbname")
+	username := viper.GetString("POSTGRES_USER")
+	password := viper.GetString("POSTGRES_PASSWORD")
+	port := viper.GetString("POSTGRES_PORT")
+	dbname := viper.GetString("POSTGRES_DB")
 
-	pgInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		host, port, username, password, dbname)
+	url := fmt.Sprintf("postgres://%v:%v@db:%v/%v?sslmode=disable", username, password, port, dbname)
 
-	db, err := sql.Open("postgres", pgInfo)
+	db, err := sql.Open("postgres", url)
 	if err != nil {
 		return nil, fmt.Errorf("validation of db parameters failed due to error: %v", err)
 	}

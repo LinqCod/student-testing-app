@@ -5,12 +5,11 @@ import (
 	"log"
 )
 
-func InitConfig() {
-	viper.SetConfigName("app")
-	viper.SetConfigType("yml")
-	viper.AddConfigPath("./configs")
+func MustLoadConfig(file string) {
+	viper.SetConfigFile(file)
+	viper.AutomaticEnv()
 
 	if err := viper.ReadInConfig(); err != nil {
-		log.Fatal("config error: ", err.Error())
+		log.Fatalf("error while loading config: %v", err)
 	}
 }
